@@ -13,17 +13,19 @@ std::vector<std::array<int, 7>> winningArray;   //Creates an winning array in Vi
 
 //Global declearations of functions
 std::vector<std::array<int, 7>> GenLottoArrays (std::string lottoType, int numberOfArrays, std::vector<std::array<int, 7>>& vector); //First parameter is what type of lotto you want. Second parameter will be what array variable you want the random array to be assigned to
-void CheckIfWin (std::string lottoType, std::vector<std::array<int, 7>>& user, std::vector<std::array<int, 7>>& win); //User array, and winning array. Also need to pass lotto Type for the creation of a new lotto array
+void CheckIfWin (std::string lottoType, std::vector<std::array<int, 7>> user, std::vector<std::array<int, 7>> win); //User array, and winning array. Also need to pass lotto Type for the creation of a new lotto array
 void PrintVectorArrays(std::vector<std::array<int, 7>> vector);
 std::string NumToString(unsigned long num);
 
 int main(){
     std::srand(std::time(0)); //Uses time as random seed. This has to be called only once
     GenLottoArrays("regular", 10, userArrays); //This generates a radnom VikingLotto array, and returns it to "userVikingArrway"
-    PrintVectorArrays(userArrays);
+    GenLottoArrays("regular", 1, winningArray);
+    CheckIfWin("regular", userArrays, winningArray);
 }
 
 std::vector<std::array<int, 7>> GenLottoArrays (std::string lottoType, int numberOfArrays, std::vector<std::array<int, 7>>& vector){ 
+    vector.clear();
     if (lottoType == "regular"){ //Generates 7 unike numbers from 1-34 (Regular Lotto)
         for (int i=0; i<=numberOfArrays; i++){    
             std::array<int, 7> array;
@@ -131,25 +133,25 @@ std::string NumToString(unsigned long num){ //Function to add spaces after every
     return numString;
 }
 
-// void CheckIfWin (std::string lottoType, std::vector<std::array<int, 7>> user, std::vector<std::array<int, 7>> win) {
-//     unsigned long w = 1; //Week Number. its long cuz it can pass 4,294,967,295, tho its extreeeeeeeemeley unlikely
-//     while (std::find(user.begin(), user.end(), win[0]) == user.end()){ //Checks wether the first element in the winning vector is in the user vector, and loops until it is
-//         if ((w % 100000) == 0){
-//             PrintVectorArrays(user);
+void CheckIfWin (std::string lottoType, std::vector<std::array<int, 7>> user, std::vector<std::array<int, 7>> win) {
+    unsigned long w = 1; //Week Number. its long cuz it can pass 4,294,967,295, tho its extreeeeeeeemeley unlikely
+    while (std::find(user.begin(), user.end(), win[0]) == user.end()){ //Checks wether the first element in the winning vector is in the user vector, and loops until it is
+        if ((w % 100000) == 0){
+            PrintVectorArrays(user);
             
-//             PrintVectorArrays(win);
+            PrintVectorArrays(win);
 
-//             std::cout << "Uke: " << NumToString(w) << std::endl;
-//         }
-//         w++;//Adds week number
+            std::cout << "Uke: " << NumToString(w) << std::endl;
+        }
+        w++;//Adds week number
         
-//         //Genreates new winning array
-//         GenLottoArrays(lottoType, 1, win);
-//     }
+        //Genreates new winning array
+        GenLottoArrays(lottoType, 1, win);
+    }
 
-//     std::cout << "Yadigg, du vant lol!" << std::endl;
-//     std::cout << "Uke: " << NumToString(w) << std::endl;
+    std::cout << "Yadigg, du vant lol!" << std::endl;
+    std::cout << "Uke: " << NumToString(w) << std::endl;
 
-//     std::cout << "Press enter to yeet away" << std::endl;
-//     std::getchar(); //Press key to quit
-// }
+    std::cout << "Press enter to yeet away" << std::endl;
+    std::getchar(); //Press key to quit
+}
