@@ -27,7 +27,7 @@ int main(){
 std::vector<std::array<int, 7>> GenLottoArrays (std::string lottoType, int numberOfArrays, std::vector<std::array<int, 7>>& vector){ 
     vector.clear();
     if (lottoType == "regular"){ //Generates 7 unike numbers from 1-34 (Regular Lotto)
-        for (int i=0; i<=numberOfArrays; i++){    
+        for (int i=1; i<=numberOfArrays; i++){    
             std::array<int, 7> array;
             int randNum;
             int arrayPlace;
@@ -50,7 +50,7 @@ std::vector<std::array<int, 7>> GenLottoArrays (std::string lottoType, int numbe
         return vector; //Returns the vector to passed vector, basically changing the vector that is passed to the one generated here
     }
     else if (lottoType == "viking"){ //Generates 7 unike numbers. 6 from 1-48, + 1 VikingTall from 1-8 (VikingLotto)
-        for (int i=0; i<=numberOfArrays; i++){    
+        for (int i=1; i<=numberOfArrays; i++){    
             std::array<int, 7> array;
             int randNum;
             int arrayPlace;         
@@ -77,7 +77,7 @@ std::vector<std::array<int, 7>> GenLottoArrays (std::string lottoType, int numbe
         return vector; //Returns the vector to passed vector, basically changing the vector that is passed to the one generated here
     }
     else if (lottoType == "euro"){
-        for (int i=0; i<=numberOfArrays; i++){    
+        for (int i=1; i<=numberOfArrays; i++){    
             std::array<int, 7> array;
             int randNum; 
             int arrayPlace;       
@@ -121,7 +121,9 @@ void PrintVectorArrays(std::vector<std::array<int, 7>> vector){ //Prints array w
                 std::cout << ' ' << array.at(x);
             }
         }
-        std::cout << std::endl; //ends line lol 
+        if (i < vector.size()-1 && vector.size() > 1){ //If i(element in vector) is not the last elemt and there is more than just one element, add a new line after the print
+            std::cout << std::endl; //new line lol 
+        }    
     }
 }
 
@@ -138,10 +140,9 @@ void CheckIfWin (std::string lottoType, std::vector<std::array<int, 7>> user, st
     while (std::find(user.begin(), user.end(), win[0]) == user.end()){ //Checks wether the first element in the winning vector is in the user vector, and loops until it is
         if ((w % 100000) == 0){
             PrintVectorArrays(user);
-            
+            std::cout << "  -";
             PrintVectorArrays(win);
-
-            std::cout << "Uke: " << NumToString(w) << std::endl;
+            std::cout << " | Week/Try: " << NumToString(w) << std::endl << std::endl; //Prints week/try number and adds to new line due to formatting the conole output
         }
         w++;//Adds week number
         
@@ -149,8 +150,11 @@ void CheckIfWin (std::string lottoType, std::vector<std::array<int, 7>> user, st
         GenLottoArrays(lottoType, 1, win);
     }
 
-    std::cout << "Yadigg, du vant lol!" << std::endl;
-    std::cout << "Uke: " << NumToString(w) << std::endl;
+    std::cout << "Yadigg, you won!" << std::endl;
+    PrintVectorArrays(user);
+    std::cout << "  -";
+    PrintVectorArrays(win);
+    std::cout << " | Week/Try: " << NumToString(w) << std::endl;
 
     std::cout << "Press enter to yeet away" << std::endl;
     std::getchar(); //Press key to quit
