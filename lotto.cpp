@@ -20,17 +20,17 @@ int main(){
     std::srand(std::time(0)); //Uses time as random seed for the random generators (std::rand())
     
     std::vector<std::array<int, 7>> userArrays;     //Vector containing a dymanic amount of 7 int element arrays
-    GenLottoArrays("viking", 10, userArrays);
+    GenLottoArrays("viking", 6969, userArrays);
     
     std::vector<std::array<int, 7>> winningArray;   //Vector which should only contain one 7 int element array
     GenLottoArrays("viking", 1, winningArray);
-    
+
     CheckIfWin("viking", userArrays, winningArray);
 }
 
 std::vector<std::array<int, 7>> GenLottoArrays (std::string lottoType, int numberOfArrays, std::vector<std::array<int, 7>>& vector){ 
     vector.clear();
-    for (int i=1; i<=numberOfArrays; i++){    
+    for (int i=1; i<=numberOfArrays; i++){ //Loops though array generation until vector has recieved numberOfArrays arrays    
         std::array<int, 7> array;
         int randNum;
         int arrayPlace;
@@ -95,18 +95,21 @@ std::vector<std::array<int, 7>> GenLottoArrays (std::string lottoType, int numbe
 }
 
 void PrintVectorArrays(std::vector<std::array<int, 7>> vector){
-    for (int i=0; i<vector.size(); i++){
-        std::array<int, 7> array = vector[i]; //Sets "array" to be one of the arrays from the vector
+    for (int i=0; i<vector.size() && i <= 9; i++){ //Loop through for every element in vector but not over 10 (9 since array start at 0) elements. If it were to print more than 10 elements in form big vecotrs, it would look messy on the output and slow the program down.
+        std::array<int, 7> array = vector[i]; //Sets "array" to be the array an "i" place in the vector
         for(int x=0; x<array.size(); x++){
             if (array.at(x) < 10){
                 std::cout << ' ' << ' ' << array.at(x); //Adds double spaced infront of number if its lower than 10
             } else {
-                std::cout << ' ' << array.at(x); //If number is highet than 10, it gets added one space infront
+                std::cout << ' ' << array.at(x); //If number is higher than 10, it gets added one space infront
             }
         }
-        if (i < vector.size()-1 && vector.size() > 1){ //If "i"(element in vector) is not the last element and there is more than just one element, add a new line after the print
+        if (i < vector.size()-1 && vector.size() > 1 && i < 9){ //If "i"(element in vector) is not the last element and there is more than just one element, and the i is not grater than 10, add a new line after the print
             std::cout << std::endl;
-        }    
+        } else if (vector.size() > 10) { //If the vector has more than 10 elements, the last line printed shoud tell how many arrays which weren't printed
+            std::cout << std::endl;
+            std::cout << "and " << NumToString(vector.size() - 10) << " more arrays..";
+        }   
     }
 }
 
