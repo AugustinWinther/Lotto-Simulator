@@ -156,7 +156,7 @@ void PrintVectorArrays(std::vector<std::array<int, 7>> vector){
 
 std::string NumToString(unsigned long num){
     std::string numString = std::to_string(num); //Converts to string
-    for (int i=numString.length(); i>0; i-=3){ //Adds space after every 3rd digit
+    for (int i=numString.length()-3; i>0; i-=3){ //Adds space after every 3rd digit
         numString.insert(i, " ");
     }
     return numString;
