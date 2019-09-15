@@ -60,11 +60,14 @@ void menu(){
             break;
         }
     }
+
+    std::cout << "Generating lotto numbers..." << std::endl;
     std::vector<std::array<int, 7>> userArrays;     //Vector containing a dymanic amount of 7 int element arrays
     GenLottoArrays(lottoType, numberOfArrays, userArrays);
     
     std::vector<std::array<int, 7>> winningArray;   //Vector which should only contain one 7 int element array
     GenLottoArrays(lottoType, 1, winningArray);
+    std::cout << "Finished!" << std::endl << std::endl;
 
     std::cout << "Ready to simulate " << NumToString(numberOfArrays) << " different lotto numbers" << std::endl;
     std::cout << "Press enter so start simulation. It will run until you win..." << std::endl;
@@ -153,7 +156,7 @@ void PrintVectorArrays(std::vector<std::array<int, 7>> vector){
             std::cout << std::endl;
         } else if (vector.size() > 10) { //If the vector has more than 10 elements, the last line printed shoud tell how many arrays which weren't printed
             std::cout << std::endl;
-            std::cout << "and " << NumToString(vector.size() - 10) << " more arrays..";
+            std::cout << "and " << NumToString(vector.size() - 10) << " more numbers...";
         }   
     }
 }
@@ -169,11 +172,12 @@ std::string NumToString(unsigned long num){
 void CheckIfWin (int lottoType, std::vector<std::array<int, 7>> user, std::vector<std::array<int, 7>> win) {
     unsigned long w = 1; //Week/Try number
     while (std::find(user.begin(), user.end(), win[0]) == user.end()){ //Checks whether the first element in the winning vector is in the user vector, and loops until it is
-        if ((w % 100000) == 0){ //Prints out every 100,000th attemt so the program isn't so dull. Also so it's possbile to see some of the winning numbers which didn't match up
+        if ((w % 10000) == 0){ //Prints out every 10000th attemt so the program isn't so dull. Also so it's possbile to see some of the winning numbers which didn't match up
+            std::cout << "Your lotto numbers:        Winning lotto number:" << std::endl;
             PrintVectorArrays(user);
-            std::cout << "  -";
+            std::cout << "  |";
             PrintVectorArrays(win);
-            std::cout << " | Week/Try: " << NumToString(w) << std::endl << std::endl; //Prints week/try number and adds to new line due to formatting the conole output
+            std::cout << "  | Week/Try: " << NumToString(w) << std::endl << std::endl; //Prints week/try number and adds to new line due to formatting the conole output
         }
         w++; //Adds 1 to week/try number
         
@@ -183,10 +187,11 @@ void CheckIfWin (int lottoType, std::vector<std::array<int, 7>> user, std::vecto
 
     //If you win (winning array is in user vector)
     std::cout << "Yadigg, you won!" << std::endl;
+    std::cout << "Your lotto numbers:         Winning lotto number:" << std::endl;
     PrintVectorArrays(user);
-    std::cout << "  -";
+    std::cout << "  |";
     PrintVectorArrays(win);
-    std::cout << " | Week/Try: " << NumToString(w) << std::endl;
+    std::cout << "  | Week/Try: " << NumToString(w) << std::endl;
 
     std::cout << "Press enter to yeet away" << std::endl;
     std::getchar(); //Press key to quit, so that the program dosent quit instantly
