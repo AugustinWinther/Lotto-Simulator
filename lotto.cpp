@@ -19,19 +19,19 @@ std::string NumToString(unsigned long num); //Converts number to string with spa
 
 int main(){
     std::srand(std::time(0)); //Uses time as random seed for the random generators (std::rand())
-    GenLottoArrays("regular", 10, userArrays);
-    GenLottoArrays("regular", 1, winningArray);
-    CheckIfWin("regular", userArrays, winningArray);
+    GenLottoArrays("viking", 10, userArrays);
+    GenLottoArrays("viking", 1, winningArray);
+    CheckIfWin("viking", userArrays, winningArray);
 }
 
 std::vector<std::array<int, 7>> GenLottoArrays (std::string lottoType, int numberOfArrays, std::vector<std::array<int, 7>>& vector){ 
     vector.clear();
-    if (lottoType == "regular"){ //Generates 7 unike numbers from 1-34 (Regular Lotto)
-        for (int i=1; i<=numberOfArrays; i++){    
-            std::array<int, 7> array;
-            int randNum;
-            int arrayPlace;
-            while (true){ //Used so that if the generated array is already in the vector, it will loop and create a new array
+    for (int i=1; i<=numberOfArrays; i++){    
+        std::array<int, 7> array;
+        int randNum;
+        int arrayPlace;
+        while (true){ //Used so that if the generated array is already in the vector, it will loop and create a new array
+            if (lottoType == "regular"){ //Generates 7 unike numbers from 1-34 (Regular Lotto)    
                 for (arrayPlace=0; arrayPlace<=6; arrayPlace++){
                 randNum = (std::rand() % 34) + 1; //Rand generates number between 0 and RAND_MAX (Typ. 32767). % 34 assures that it dossent exeed 33. We have to add 1 to make it be bewteen 1 and 34 instead of 0 and 33
                     while  (std::find(array.begin(), array.end(), randNum) != array.end()){ //If random alrady is in array, create a new randNum until it's uniqe
@@ -44,23 +44,13 @@ std::vector<std::array<int, 7>> GenLottoArrays (std::string lottoType, int numbe
                 if (std::find(vector.begin(), vector.end(), array) == vector.end()){ //If the array is not in the vecotr already, it wil break the while loop and continue
                     break;
                 }
-            }
-            vector.push_back(array); //Appends array to vector
-        }
-        return vector; //Returns the vector to passed vector, basically changing the vector that is passed to the one generated here
-    }
-    else if (lottoType == "viking"){ //Generates 7 unique numbers. 6 from 1-48, + 1 from 1-8 (VikingLotto)
-        for (int i=1; i<=numberOfArrays; i++){    
-            std::array<int, 7> array;
-            int randNum;
-            int arrayPlace;         
-            while (true){    
+            } else if (lottoType == "viking"){ //Generates 7 unique numbers. 6 from 1-48, + 1 from 1-8 (VikingLotto)
                 for (arrayPlace=0; arrayPlace<=5; arrayPlace++){
                     randNum = (std::rand() % 48) + 1;
                     while  (std::find(array.begin(), array.end(), randNum) != array.end()){
                         randNum = (std::rand() % 48) + 1;
                     }
-                array.at(arrayPlace) = randNum;
+                    array.at(arrayPlace) = randNum;
                 }
                 std::sort(array.begin(), array.begin()+arrayPlace);
             
@@ -71,23 +61,13 @@ std::vector<std::array<int, 7>> GenLottoArrays (std::string lottoType, int numbe
                 if (std::find(vector.begin(), vector.end(), array) == vector.end()){ //If the array is not in the vector alreayd, it wil break the while loop and continue
                     break;
                 }
-            }    
-            vector.push_back(array); //Appends array to vector
-        }
-        return vector; //Returns the vector to passed vector, basically changing the vector that is passed to the one generated here
-    }
-    else if (lottoType == "euro"){ //Generates 7 unike numbers. 5 from 1-50, + 2 from 1-10 (Eurojackpot)
-        for (int i=1; i<=numberOfArrays; i++){    
-            std::array<int, 7> array;
-            int randNum; 
-            int arrayPlace;       
-            while (true){
+            } else if (lottoType == "euro"){ //Generates 7 unike numbers. 5 from 1-50, + 2 from 1-10 (Eurojackpot)
                 for (arrayPlace=0; arrayPlace<=4; arrayPlace++){ 
                     randNum = (std::rand() % 50) + 1;
                     while  (std::find(array.begin(), array.end(), randNum) != array.end()){
                         randNum = (std::rand() % 50) + 1;
                     }
-                array.at(arrayPlace) = randNum;
+                    array.at(arrayPlace) = randNum;
                 }   
                 std::sort(array.begin(), array.begin()+arrayPlace);
             
@@ -96,17 +76,16 @@ std::vector<std::array<int, 7>> GenLottoArrays (std::string lottoType, int numbe
                     while  (arrayPlace == 6 && randNum == array[5] ){
                         randNum = (std::rand() % 10) + 1;
                     }
-                array.at(arrayPlace) = randNum;
+                    array.at(arrayPlace) = randNum;
                 }
                 std::sort(array.begin()+5, array.begin()+arrayPlace); //Sorts the last two digits for themselves as this two are supposed to be at the end of the array
                 
-                if (std::find(vector.begin(), vector.end(), array) == vector.end()){ //If the array is not in the vector alreayd, it wil break the while loop and continue
+                if (std::find(vector.begin(), vector.end(), array) == vector.end()){ //If the array is not in the vector already, it wil break the while loop and continue
                     break;
                 }
-            }    
-            vector.push_back(array); //Appends array to vector
+            }
         }
-        return vector; //Returns the vector to passed vector, basically changing the vector that is passed to the one generated here
+        vector.push_back(array); //Appends array to vector
     }
     return vector; //This return will return an empty vector if none of the lottoTypes is selected.
 }
