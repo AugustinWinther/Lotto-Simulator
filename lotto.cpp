@@ -11,31 +11,72 @@
 //N/A
 
 //Global declearations of functions
-std::vector<std::array<int, 7>> GenLottoArrays (std::string lottoType, int numberOfArrays, std::vector<std::array<int, 7>>& vector); //Generates arrays representing lotto numbers/rows
-void CheckIfWin (std::string lottoType, std::vector<std::array<int, 7>> user, std::vector<std::array<int, 7>> win); //Checks if user passed vector contains the first array from win vector, if not, it generates new win array (lotto numbers)
+std::vector<std::array<int, 7>> GenLottoArrays (int lottoType, int numberOfArrays, std::vector<std::array<int, 7>>& vector); //Generates arrays representing lotto numbers/rows
+void CheckIfWin (int lottoType, std::vector<std::array<int, 7>> user, std::vector<std::array<int, 7>> win); //Checks if user passed vector contains the first array from win vector, if not, it generates new win array (lotto numbers)
 void PrintVectorArrays(std::vector<std::array<int, 7>> vector); //Prints all arrays in a vector vertically
 std::string NumToString(unsigned long num); //Converts number to string with spaces added after every 3rd digit for easy reading
+void menu();
 
 int main(){
     std::srand(std::time(0)); //Uses time as random seed for the random generators (std::rand())
-    
-    std::vector<std::array<int, 7>> userArrays;     //Vector containing a dymanic amount of 7 int element arrays
-    GenLottoArrays("viking", 6969, userArrays);
-    
-    std::vector<std::array<int, 7>> winningArray;   //Vector which should only contain one 7 int element array
-    GenLottoArrays("viking", 1, winningArray);
-
-    CheckIfWin("viking", userArrays, winningArray);
+    menu();
 }
 
-std::vector<std::array<int, 7>> GenLottoArrays (std::string lottoType, int numberOfArrays, std::vector<std::array<int, 7>>& vector){ 
+void menu(){
+    std::srand(std::time(0)); //Uses time as random seed for the random generators (std::rand())
+    std::cout << "                         Welcome to Lotto Simulations!... lol                       " << std::endl;
+    std::cout << "------------------------------------------------------------------------------------" << std::endl;
+    std::cout << "Please choose one of the lotteries you want to simulate:"                             << std::endl;
+    std::cout << "[1] - Regular Lotto (Based of the Nowegian lottery ""Lotto"")"                        << std::endl;
+    std::cout << "      7 unique and random numbers between 1-34"                                       << std::endl;
+    std::cout << "[2] - Viking Lotto (Based on the multinational lottery ""VikingLotto"")"              << std::endl;
+    std::cout << "      7 unique random numbers. 6 numbers between 1-48 + 1 random number between 1-8"  << std::endl;
+    std::cout << "[3] - Euro Lotto (Based on the european lottery ""Eurojackpot"")"                     << std::endl;
+    std::cout << "      7 unique random numbers. 5 numbers between 1-50 + 2 random number between 1-10" << std::endl;
+    std::cout << std::endl;
+    int lottoType;
+    while ((lottoType != 1) || (lottoType != 2) || (lottoType != 3)){ //Loops the question of input number until the user types a valid number
+        std::cout << "Type desired lotto and press ENTER: ";
+        std::cin >> lottoType;
+        if ((lottoType == 1) || (lottoType == 2) || (lottoType == 3)){ //Breaks the loop if valid input
+            std::cout << std::endl; //New line for formatting sakes
+            break;
+        } else {
+            std::cout << "ERROR! Invalid input, please try again" << std::endl; //Warns the user if they typed a inavlid number
+        }
+    }
+    int numberOfArrays; //Amopunt of different lotto numbers
+    while (numberOfArrays > 10000 || numberOfArrays < 1){
+        std::cout << "Please type amount of lotto numbers you want [0 - 10 000]: ";
+        std:: cin >> numberOfArrays;
+        if (numberOfArrays > 10000 || numberOfArrays < 1){ //Warns the user if they typed a inavlid number
+            std::cout << "ERROR! Invalid input, please try again" << std::endl;
+        } else {
+            std::cout << std::endl; //New line for formatting sakes
+            break;
+        }
+    }
+    std::vector<std::array<int, 7>> userArrays;     //Vector containing a dymanic amount of 7 int element arrays
+    GenLottoArrays(lottoType, numberOfArrays, userArrays);
+    
+    std::vector<std::array<int, 7>> winningArray;   //Vector which should only contain one 7 int element array
+    GenLottoArrays(lottoType, 1, winningArray);
+
+    std::cout << "Ready to simulate " << NumToString(numberOfArrays) << " different lotto numbers" << std::endl;
+    std::cout << "Press enter so start simulation. It will run until you win..." << std::endl;
+    std::getchar(); 
+    std::getchar(); //Press any key to contiue
+    CheckIfWin(lottoType, userArrays, winningArray);
+}
+
+std::vector<std::array<int, 7>> GenLottoArrays (int lottoType, int numberOfArrays, std::vector<std::array<int, 7>>& vector){ 
     vector.clear();
     for (int i=1; i<=numberOfArrays; i++){ //Loops though array generation until vector has recieved numberOfArrays arrays    
         std::array<int, 7> array;
         int randNum;
         int arrayPlace;
         while (true){ //Used so that if the generated array is already in the vector, it will loop and create a new array
-            if (lottoType == "regular"){ //Generates 7 unike numbers from 1-34 (Regular Lotto)    
+            if (lottoType == 1){ //Generates 7 unike numbers from 1-34 (Regular Lotto)    
                 for (arrayPlace=0; arrayPlace<=6; arrayPlace++){
                 randNum = (std::rand() % 34) + 1; //Rand generates number between 0 and RAND_MAX (Typ. 32767). % 34 assures that it dossent exeed 33. We have to add 1 to make it be bewteen 1 and 34 instead of 0 and 33
                     while  (std::find(array.begin(), array.end(), randNum) != array.end()){ //If random alrady is in array, create a new randNum until it's uniqe
@@ -48,7 +89,7 @@ std::vector<std::array<int, 7>> GenLottoArrays (std::string lottoType, int numbe
                 if (std::find(vector.begin(), vector.end(), array) == vector.end()){ //If the array is not in the vecotr already, it wil break the while loop and continue
                     break;
                 }
-            } else if (lottoType == "viking"){ //Generates 7 unique numbers. 6 from 1-48, + 1 from 1-8 (VikingLotto)
+            } else if (lottoType == 2){ //Generates 7 unique numbers. 6 from 1-48, + 1 from 1-8 (VikingLotto)
                 for (arrayPlace=0; arrayPlace<=5; arrayPlace++){
                     randNum = (std::rand() % 48) + 1;
                     while  (std::find(array.begin(), array.end(), randNum) != array.end()){
@@ -65,7 +106,7 @@ std::vector<std::array<int, 7>> GenLottoArrays (std::string lottoType, int numbe
                 if (std::find(vector.begin(), vector.end(), array) == vector.end()){ //If the array is not in the vector alreayd, it wil break the while loop and continue
                     break;
                 }
-            } else if (lottoType == "euro"){ //Generates 7 unike numbers. 5 from 1-50, + 2 from 1-10 (Eurojackpot)
+            } else if (lottoType == 3){ //Generates 7 unike numbers. 5 from 1-50, + 2 from 1-10 (Eurojackpot)
                 for (arrayPlace=0; arrayPlace<=4; arrayPlace++){ 
                     randNum = (std::rand() % 50) + 1;
                     while  (std::find(array.begin(), array.end(), randNum) != array.end()){
@@ -121,7 +162,7 @@ std::string NumToString(unsigned long num){
     return numString;
 }
 
-void CheckIfWin (std::string lottoType, std::vector<std::array<int, 7>> user, std::vector<std::array<int, 7>> win) {
+void CheckIfWin (int lottoType, std::vector<std::array<int, 7>> user, std::vector<std::array<int, 7>> win) {
     unsigned long w = 1; //Week/Try number
     while (std::find(user.begin(), user.end(), win[0]) == user.end()){ //Checks whether the first element in the winning vector is in the user vector, and loops until it is
         if ((w % 100000) == 0){ //Prints out every 100,000th attemt so the program isn't so dull. Also so it's possbile to see some of the winning numbers which didn't match up
