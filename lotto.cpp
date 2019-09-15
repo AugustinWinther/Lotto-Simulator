@@ -8,8 +8,7 @@
 //Im not "using namespace std" here just for learning good practice
 
 //Global declearation of data types
-std::vector<std::array<int, 7>> userArrays;     //Vector containing a dymanic amount of 7 int element arrays
-std::vector<std::array<int, 7>> winningArray;   //Vector which should only contain one 7 int element array
+//N/A
 
 //Global declearations of functions
 std::vector<std::array<int, 7>> GenLottoArrays (std::string lottoType, int numberOfArrays, std::vector<std::array<int, 7>>& vector); //Generates arrays representing lotto numbers/rows
@@ -19,8 +18,13 @@ std::string NumToString(unsigned long num); //Converts number to string with spa
 
 int main(){
     std::srand(std::time(0)); //Uses time as random seed for the random generators (std::rand())
+    
+    std::vector<std::array<int, 7>> userArrays;     //Vector containing a dymanic amount of 7 int element arrays
     GenLottoArrays("viking", 10, userArrays);
+    
+    std::vector<std::array<int, 7>> winningArray;   //Vector which should only contain one 7 int element array
     GenLottoArrays("viking", 1, winningArray);
+    
     CheckIfWin("viking", userArrays, winningArray);
 }
 
