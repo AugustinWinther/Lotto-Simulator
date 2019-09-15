@@ -34,23 +34,27 @@ void menu(){
     std::cout << "[3] - Euro Lotto (Based on the european lottery ""Eurojackpot"")"                     << std::endl;
     std::cout << "      7 unique random numbers. 5 numbers between 1-50 + 2 random number between 1-10" << std::endl;
     std::cout << std::endl;
-    int lottoType;
-    while ((lottoType != 1) || (lottoType != 2) || (lottoType != 3)){ //Loops the question of input number until the user types a valid number
+    int lottoType = 0;
+    while (lottoType < 1 || lottoType > 3){ //Loops the question of input number until the user types a valid number
         std::cout << "Type desired lotto and press ENTER: ";
         std::cin >> lottoType;
-        if ((lottoType == 1) || (lottoType == 2) || (lottoType == 3)){ //Breaks the loop if valid input
+        if (lottoType < 1 || lottoType > 3 || !std::cin){
+            std::cout << "ERROR! Invalid input, please try again" << std::endl; //Warns the user if they typed a inavlid number
+            std::cin.clear(); //Clears error flags in cin
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //Ignores rest of the line inputet to lottoType
+        } else {
             std::cout << std::endl; //New line for formatting sakes
             break;
-        } else {
-            std::cout << "ERROR! Invalid input, please try again" << std::endl; //Warns the user if they typed a inavlid number
         }
     }
     int numberOfArrays; //Amopunt of different lotto numbers
-    while (numberOfArrays > 10000 || numberOfArrays < 1){
+    while (numberOfArrays < 1 || numberOfArrays > 10000){
         std::cout << "Please type amount of lotto numbers you want [0 - 10 000]: ";
-        std:: cin >> numberOfArrays;
-        if (numberOfArrays > 10000 || numberOfArrays < 1){ //Warns the user if they typed a inavlid number
+        std::cin >> numberOfArrays;
+        if (numberOfArrays < 1 || numberOfArrays > 10000){ //Warns the user if they typed a inavlid number
             std::cout << "ERROR! Invalid input, please try again" << std::endl;
+            std::cin.clear(); //Clears error flags in cin
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //Ignores rest of the line inputet to numberOfArrays
         } else {
             std::cout << std::endl; //New line for formatting sakes
             break;
