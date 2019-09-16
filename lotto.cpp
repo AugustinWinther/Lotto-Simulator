@@ -35,6 +35,7 @@ void menu(){
     std::cout << "      7 unique random numbers. 5 numbers between 1-50 + 2 random number between 1-10" << std::endl;
     std::cout << std::endl;
     int lottoType = 0;
+    std::string lottoTypeString;
     while (lottoType < 1 || lottoType > 3){ //Loops the question of input number until the user types a valid number
         std::cout << "Type desired lotto and press ENTER: ";
         std::cin >> lottoType;
@@ -43,6 +44,13 @@ void menu(){
             std::cin.clear(); //Clears error flags in cin
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //Ignores rest of the line inputet to lottoType
         } else {
+            if (lottoType == 1){
+                lottoTypeString = "Regular Lotto";
+            } else if (lottoType == 2){
+                lottoTypeString = "Viking Lotto";
+            } else if(lottoType == 3){
+                lottoTypeString = "Euro Lotto";
+            }
             std::cout << std::endl; //New line for formatting sakes
             break;
         }
@@ -69,7 +77,7 @@ void menu(){
     GenLottoArrays(lottoType, 1, winningArray);
     std::cout << "Finished!" << std::endl << std::endl;
 
-    std::cout << "Ready to simulate " << NumToString(numberOfArrays) << " different lotto numbers" << std::endl;
+    std::cout << "Ready to simulate " << NumToString(numberOfArrays) << " different lotto numbers on " << lottoTypeString <<std::endl;
     std::cout << "Press enter so start simulation. It will run until you win..." << std::endl;
     std::getchar(); 
     std::getchar(); //Press any key to contiue
