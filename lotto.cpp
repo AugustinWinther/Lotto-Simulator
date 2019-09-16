@@ -35,6 +35,7 @@ void menu(){
     std::cout << "      7 unique random numbers. 5 numbers between 1-50 + 2 random number between 1-10" << std::endl;
     std::cout << std::endl;
     int lottoType = 0;
+    int lottoPrice;
     std::string lottoTypeString;
     while (lottoType < 1 || lottoType > 3){ //Loops the question of input number until the user types a valid number
         std::cout << "Type desired lotto and press ENTER: ";
@@ -46,10 +47,13 @@ void menu(){
         } else {
             if (lottoType == 1){
                 lottoTypeString = "Regular Lotto";
+                lottoPrice = 5;
             } else if (lottoType == 2){
                 lottoTypeString = "Viking Lotto";
+                lottoPrice = 6;
             } else if(lottoType == 3){
                 lottoTypeString = "Euro Lotto";
+                lottoPrice = 25;
             }
             std::cout << std::endl; //New line for formatting sakes
             break;
@@ -78,6 +82,7 @@ void menu(){
     std::cout << "Finished!" << std::endl << std::endl;
 
     std::cout << "Ready to simulate " << NumToString(numberOfArrays) << " different lotto numbers on " << lottoTypeString <<std::endl;
+    std::cout << NumToString(numberOfArrays) << " " << lottoTypeString << " numbers would cost you: " << NumToString(numberOfArrays * lottoPrice) << "kr (NOK, Norwegian kroner)" << std::endl;
     std::cout << "Press enter so start simulation. It will run until you win..." << std::endl;
     std::getchar(); 
     std::getchar(); //Press any key to contiue
