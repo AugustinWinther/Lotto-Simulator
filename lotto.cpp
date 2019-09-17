@@ -23,7 +23,6 @@ int main(){
 }
 
 void menu(){
-    std::srand(std::time(0)); //Uses time as random seed for the random generators (std::rand())
     std::cout << "                         Welcome to Lotto Simulations!... lol                       " << std::endl;
     std::cout << "------------------------------------------------------------------------------------" << std::endl;
     std::cout << "Please choose one of the lotteries you want to simulate:"                             << std::endl;
