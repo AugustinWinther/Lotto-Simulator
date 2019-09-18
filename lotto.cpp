@@ -20,6 +20,9 @@ void menu();
 int main(){
     std::srand(std::time(0)); //Uses time as random seed for the random generators (std::rand())
     menu();
+
+    std::cout << "Press enter to yeet away" << std::endl;
+    std::getchar(); //Press key to quit, so that the program dosent quit instantly
 }
 
 void menu(){
@@ -204,7 +207,4 @@ void CheckIfWin (int lottoType, std::vector<std::array<int, 7>> user, std::vecto
     std::cout << "  |";
     PrintVectorArrays(win);
     std::cout << "  | Week/Try: " << NumToString(w) << std::endl;
-
-    std::cout << "Press enter to yeet away" << std::endl;
-    std::getchar(); //Press key to quit, so that the program dosent quit instantly
 }
