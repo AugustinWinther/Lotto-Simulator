@@ -1,9 +1,9 @@
-#include <iostream> //cout and stuff
-#include <ctime> //time()
-#include <cstdlib> //srand() and rand()
-#include <algorithm> //sort() and find()
-#include <array> //std array library lol
-#include <vector> //vector library... duh
+#include <iostream>     //std::cout and std::cin
+#include <ctime>        //std::time
+#include <cstdlib>      //std::srand and std::rand
+#include <algorithm>    //std::sort and std::find
+#include <array>        //std::array
+#include <vector>       //std::vector
 
 //Im not "using namespace std" here just for learning good practice
 
@@ -11,10 +11,10 @@
 //N/A
 
 //Global declearations of functions
-std::vector<std::array<int, 7>> GenLottoNumbers (int lottoType, int amountOfNumbers, std::vector<std::array<int, 7>>& vector); //Generates arrays representing lotto numbers/rows
-void CheckIfWin (int lottoType, std::vector<std::array<int, 7>> user, std::vector<std::array<int, 7>> win); //Checks if user passed vector contains the first array from win vector, if not, it generates new win array (lotto numbers)
-void PrintLottoNumbers(std::vector<std::array<int, 7>> vector); //Prints all arrays in a vector vertically
-std::string NumToString(unsigned long num); //Converts number to string with spaces added after every 3rd digit for easy reading
+std::vector<std::array<int, 7>> GenLottoNumbers (int lottoType, int amountOfNumbers, std::vector<std::array<int, 7>>& vector);  //Generates arrays representing lotto numbers/rows
+void CheckIfWin (int lottoType, std::vector<std::array<int, 7>> user, std::vector<std::array<int, 7>> win);                     //Checks if user passed vector contains the first array from win vector, if not, it generates new win array (lotto numbers)
+void PrintLottoNumbers(std::vector<std::array<int, 7>> vector);                                                                 //Prints all arrays in a vector vertically
+std::string NumToString(unsigned long num);                                                                                     //Converts number to string with spaces added after every 3rd digit for easy reading
 void menu();
 
 int main(){
