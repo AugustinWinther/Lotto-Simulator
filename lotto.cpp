@@ -178,17 +178,7 @@ std::vector<std::array<int, 7>> UserGenLottoNumbers (int lottoType, std::vector<
     //Regular Lotto Procedure
     if (lottoType == 1){   
         for (arrayPlace=0; arrayPlace<=6; arrayPlace++){
-            while (true){ 
-                for (int i = 0; i < 7; i++){    //Prints out array
-                    if (array[i] == 0){
-                        std::cout << " | --";
-                    } else if (array[i] < 10) {
-                        std::cout << " |  " << array[i]; 
-                    } else {
-                        std::cout << " | "<< array[i];
-                    }
-                }
-                std::cout << " |" << std::endl;
+            while (true){
                 std::cout << "Please type a number between 1-34: ";
                 std::cin >> num;
                 if (num < 1 || num > 34 || std::cin.fail() || std::cin.peek()!='\n'){ 
@@ -200,18 +190,139 @@ std::vector<std::array<int, 7>> UserGenLottoNumbers (int lottoType, std::vector<
                     std::cout << "ERROR! Number already selected, please try again..." << std::endl << std::endl;
                 } else {
                     array.at(arrayPlace) = num;     //Adds the number to array.
+                    std::sort(array.begin(), array.begin()+arrayPlace+1); //Sorts the array from lowest to highest number
                     break;
                 }
             }
+            //PrintsOutArray
+            for(int x=0; x<array.size(); x++){
+                if (array[x] == 0){
+                    std::cout << " | --";
+                } else if (array[x] < 10) {
+                    std::cout << " |  " << array[x];
+                } else {
+                    std::cout << " | "<< array[x];      
+                }
+            }
+            std::cout << " |" << std::endl;
         }
-        std::sort(array.begin(), array.begin()+arrayPlace); //Sorts the array from lowest to highest number
         vector.push_back(array); //Appends array to vector
+        return vector;
+    }
+    
+    //Viking Lotto Procedure
+    else if (lottoType == 2){   
+        for (arrayPlace=0; arrayPlace<=6; arrayPlace++){
+            while (true){ 
+                //First 6 numbers
+                if (arrayPlace < 6){
+                    std::cout << "Please type a number between 1-48: ";
+                    std::cin >> num;
+                    if (num < 1 || num > 48 || std::cin.fail() || std::cin.peek()!='\n'){ 
+                        std::cout << "ERROR! Invalid input, please try again" << std::endl << std::endl; //Warns the user if they typed a inavlid number
+                        std::cin.clear(); //Clears error flags in cin
+                        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //Ignores rest of the line inputet to amountOfNumbers
+                        num = 0; //Reset number incase wrong inputs were saved to the varible (eg. whole numbers from floats og double inputs)
+                    } else if (std::find(array.begin(), array.end(), num) != array.end()){ 
+                        std::cout << "ERROR! Number already selected, please try again..." << std::endl << std::endl;
+                    } else {
+                        array.at(arrayPlace) = num;     //Adds the number to array.
+                        std::sort(array.begin(), array.begin()+arrayPlace+1); //Sorts the array from lowest to highest number
+                        break;
+                    }
+                }
+                
+                //Last number
+                else if (arrayPlace == 6){
+                    std::cout << "Please type a number between 1-8: ";
+                    std::cin >> num;
+                    if (num < 1 || num > 8 || std::cin.fail() || std::cin.peek()!='\n'){ 
+                        std::cout << "ERROR! Invalid input, please try again" << std::endl << std::endl; //Warns the user if they typed a inavlid number
+                        std::cin.clear(); //Clears error flags in cin
+                        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //Ignores rest of the line inputet to amountOfNumbers
+                        num = 0; //Reset number incase wrong inputs were saved to the varible (eg. whole numbers from floats og double inputs)
+                    } else {
+                        array.at(arrayPlace) = num;     //Adds the number to array.
+                        break;
+                    }
+                }  
+            }
+            //PrintsOutArray
+            for(int x=0; x<array.size(); x++){
+                if (array[x] == 0){
+                    std::cout << " | --";
+                } else if (array[x] < 10) {
+                    std::cout << " |  " << array[x];
+                } else {
+                    std::cout << " | "<< array[x];      
+                }
+            }
+            std::cout << " |" << std::endl;
+        }
+        vector.push_back(array); //Appends array to vector
+        return vector;
+    }
+
+    //Euro Lotto Procedure
+    else if (lottoType == 3){   
+        for (arrayPlace=0; arrayPlace<=6; arrayPlace++){
+            while (true){ 
+                //First 5 numbers
+                if (arrayPlace < 5){
+                    std::cout << "Please type a number between 1-50: ";
+                    std::cin >> num;
+                    if (num < 1 || num > 50 || std::cin.fail() || std::cin.peek()!='\n'){ 
+                        std::cout << "ERROR! Invalid input, please try again" << std::endl << std::endl; //Warns the user if they typed a inavlid number
+                        std::cin.clear(); //Clears error flags in cin
+                        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //Ignores rest of the line inputet to amountOfNumbers
+                        num = 0; //Reset number incase wrong inputs were saved to the varible (eg. whole numbers from floats og double inputs)
+                    } else if (std::find(array.begin(), array.end(), num) != array.end()){ 
+                        std::cout << "ERROR! Number already selected, please try again..." << std::endl << std::endl;
+                    } else {
+                        array.at(arrayPlace) = num;     //Adds the number to array.
+                        std::sort(array.begin(), array.begin()+arrayPlace+1); //Sorts the array from lowest to highest number
+                        break;
+                    }
+                }
+                
+                //Last 2 numbers
+                else if (arrayPlace > 4){
+                    std::cout << "Please type a number between 1-10: ";
+                    std::cin >> num;
+                    if (num < 1 || num > 10 || std::cin.fail() || std::cin.peek()!='\n'){ 
+                        std::cout << "ERROR! Invalid input, please try again" << std::endl << std::endl; //Warns the user if they typed a inavlid number
+                        std::cin.clear(); //Clears error flags in cin
+                        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //Ignores rest of the line inputet to amountOfNumbers
+                        num = 0; //Reset number incase wrong inputs were saved to the varible (eg. whole numbers from floats og double inputs)
+                    } else if (std::find(array.begin()+arrayPlace-1, array.end(), num) != array.end()){ 
+                        std::cout << "ERROR! Number already selected, please try again..." << std::endl << std::endl;
+                    } else {
+                        array.at(arrayPlace) = num;     //Adds the number to array.
+                        std::sort(array.begin()+5, array.begin()+arrayPlace+1); //Sorts the array from lowest to highest number
+                        break;
+                    }
+                } 
+            }
+            //PrintsOutArray
+            for(int x=0; x<array.size(); x++){
+                if (array[x] == 0){
+                    std::cout << " | --";
+                } else if (array[x] < 10) {
+                    std::cout << " |  " << array[x];
+                } else {
+                    std::cout << " | "<< array[x];      
+                }
+            }
+            std::cout << " |" << std::endl;
+        }
+        vector.push_back(array); //Appends array to vector
+        return vector;
     }
     return vector; //This return will return an empty vector if none of the lottoTypes is selected.
 }
 
 void PrintLottoNumbers(std::vector<std::array<int, 7>> vector, int printAmount){
-    //If the printamount is bigger than vector size, set print amount to vector size since we cant print out more elements than the vector has
+    //If the printAmount is bigger than vector size, set print amount to vector size since we cant print out more elements than the vector has
     if (printAmount > vector.size()){
         printAmount = vector.size();
     }
