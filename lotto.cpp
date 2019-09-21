@@ -11,19 +11,20 @@
 //N/A
 
 //Global declearations of functions
-std::vector<std::array<int, 7>> GenLottoNumbers (int lottoType, int amountOfNumbers, std::vector<std::array<int, 7>>& vector);  //Generates arrays representing lotto numbers/rows
-void CheckIfWin (int lottoType, std::vector<std::array<int, 7>> user, std::vector<std::array<int, 7>> win);                     //Checks if user passed vector contains the first array from win vector, if not, it generates new win array (lotto numbers)
-void PrintLottoNumbers(std::vector<std::array<int, 7>> vector);                                                                 //Prints all arrays in a vector vertically
-std::string NumToString(unsigned long num);                                                                                     //Converts number to string with spaces added after every 3rd digit for easy reading
+std::vector<std::array<int, 7>> AutoGenLottoNumbers (int lottoType, int amountOfNumbers, std::vector<std::array<int, 7>>& vector);  //Generates arrays representing lotto numbers/rows
+std::vector<std::array<int, 7>> UserGenLottoNumbers (int lottoType, std::vector<std::array<int, 7>>& vector);
+void CheckIfWin (int lottoType, std::vector<std::array<int, 7>> user, std::vector<std::array<int, 7>> win);                         //Checks if user passed vector contains the first array from win vector, if not, it generates new win array (lotto numbers)
+void PrintLottoNumbers(std::vector<std::array<int, 7>> vector);                                                                     //Prints all arrays in a vector vertically
+std::string NumToString(unsigned long num);                                                                                         //Converts number to string with spaces added after every 3rd digit for easy reading
 void menu();
 
 int main(){
+    std::srand(std::time(0)); //Uses time as random seed for the random generators (std::rand())
+
     //Welcome message
     std::cout << "                         Welcome to Lotto Simulations!... lol                       " << std::endl;
     std::cout << "------------------------------------------------------------------------------------" << std::endl;
     
-    std::srand(std::time(0)); //Uses time as random seed for the random generators (std::rand())
-
     menu();
 
     //Press key to quit, so that the program dosent quit instantly
@@ -89,10 +90,10 @@ void menu(){
 
     std::cout << "Generating lotto numbers..." << std::endl;
     std::vector<std::array<int, 7>> userNumbers;     //Vector containing a dymanic amount of 7 int element arrays
-    GenLottoNumbers(lottoType, amountOfNumbers, userNumbers);
+    AutoGenLottoNumbers(lottoType, amountOfNumbers, userNumbers);
     
     std::vector<std::array<int, 7>> winningNumbers;   //Vector which should only contain one 7 int element array
-    GenLottoNumbers(lottoType, 1, winningNumbers);
+    AutoGenLottoNumbers(lottoType, 1, winningNumbers);
     std::cout << "Finished!" << std::endl << std::endl;
 
     std::cout << "Ready to simulate " << NumToString(amountOfNumbers) << " different lotto numbers on " << lottoTypeString <<std::endl;
@@ -103,7 +104,7 @@ void menu(){
     CheckIfWin(lottoType, userNumbers, winningNumbers);
 }
 
-std::vector<std::array<int, 7>> GenLottoNumbers (int lottoType, int amountOfNumbers, std::vector<std::array<int, 7>>& vector){ 
+std::vector<std::array<int, 7>> AutoGenLottoNumbers (int lottoType, int amountOfNumbers, std::vector<std::array<int, 7>>& vector){ 
     vector.clear();
     for (int i=1; i<=amountOfNumbers; i++){ //Loops though array generation until vector has recieved amountOfNumbers arrays    
         std::array<int, 7> array;
@@ -169,6 +170,46 @@ std::vector<std::array<int, 7>> GenLottoNumbers (int lottoType, int amountOfNumb
     return vector; //This return will return an empty vector if none of the lottoTypes is selected.
 }
 
+std::vector<std::array<int, 7>> UserGenLottoNumbers (int lottoType, std::vector<std::array<int, 7>>& vector){ 
+    std::array<int, 7> array = {0, 0, 0, 0, 0, 0, 0};
+    int arrayPlace;
+    int num;
+
+    //Regular Lotto Procedure
+    if (lottoType == 1){   
+        for (arrayPlace=0; arrayPlace<=6; arrayPlace++){
+            while (true){ 
+                for (int i = 0; i < 7; i++){    //Prints out array
+                        if (array[i] == 0){
+                            std::cout << " | --";
+                        } else if (array[i] < 10) {
+                            std::cout << " |  " << array[i]; 
+                        } else {
+                            std::cout << " | "<< array[i];
+                        }
+                    }
+                std::cout << " |" << std::endl;
+                std::cout << "Please type a number between 1-34: ";
+                std::cin >> num;
+                if (num < 1 || num > 34 || std::cin.fail() || std::cin.peek()!='\n'){ 
+                    std::cout << "ERROR! Invalid input, please try again" << std::endl << std::endl; //Warns the user if they typed a inavlid number
+                    std::cin.clear(); //Clears error flags in cin
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //Ignores rest of the line inputet to amountOfNumbers
+                    num = 0; //Reset number incase wrong inputs were saved to the varible (eg. whole numbers from floats og double inputs)
+                } else if (std::find(array.begin(), array.end(), num) != array.end()){ 
+                    std::cout << "ERROR! Number already selected, please try again..." << std::endl << std::endl;
+                } else {
+                    array.at(arrayPlace) = num;     //Adds the number to array.
+                    break;
+                }
+            }
+        }
+        std::sort(array.begin(), array.begin()+arrayPlace); //Sorts the array from lowest to highest number
+        vector.push_back(array); //Appends array to vector
+    }
+    return vector; //This return will return an empty vector if none of the lottoTypes is selected.
+}
+
 void PrintLottoNumbers(std::vector<std::array<int, 7>> vector){
     for (int i=0; i<vector.size() && i <= 9; i++){ //Loop through for every element in vector but not over 10 (9 since array start at 0) elements. If it were to print more than 10 elements in form big vecotrs, it would look messy on the output and slow the program down.
         std::array<int, 7> array = vector[i]; //Sets "array" to be the array an "i" place in the vector
@@ -209,7 +250,7 @@ void CheckIfWin (int lottoType, std::vector<std::array<int, 7>> user, std::vecto
         w++; //Adds 1 to week/try number
         
         //Genreates new winning array since tha last didnt match any of the user arrays
-        GenLottoNumbers(lottoType, 1, win);
+        AutoGenLottoNumbers(lottoType, 1, win);
     }
 
     //If you win (winning array is in user vector)
