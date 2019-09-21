@@ -26,6 +26,13 @@ int main(){
 }
 
 void menu(){
+    //Declearing variables for this function
+    int lottoType = 0;              //1=Regualr, 2=Viking, 3=Euro. Defined to 0 for resetting purposes
+    int lottoPrice = 0;             //Price of specified lotto. Gets defined depending on what lottoType is selected. Defined to 0 for resetting purposes
+    int amountOfNumbers = 0;        //Amount of different lotto numbers. Defined to 0 for resetting purposes
+    std::string lottoTypeString;    //String represenmting the lottoType variable. Used for console ouptut
+    
+    //Prints out menu
     std::cout << "                         Welcome to Lotto Simulations!... lol                       " << std::endl;
     std::cout << "------------------------------------------------------------------------------------" << std::endl;
     std::cout << "Please choose one of the lotteries you want to simulate:"                             << std::endl;
@@ -34,39 +41,38 @@ void menu(){
     std::cout << "[2] - Viking Lotto (Based on the multinational lottery ""VikingLotto"")"              << std::endl;
     std::cout << "      7 unique random numbers. 6 numbers between 1-48 + 1 random number between 1-8"  << std::endl;
     std::cout << "[3] - Euro Lotto (Based on the european lottery ""Eurojackpot"")"                     << std::endl;
-    std::cout << "      7 unique random numbers. 5 numbers between 1-50 + 2 random number between 1-10" << std::endl;
-    std::cout << std::endl;
-    int lottoType = 0;
-    int lottoPrice;
-    std::string lottoTypeString;
+    std::cout << "      7 unique random numbers. 5 numbers between 1-50 + 2 random number between 1-10" << std::endl << std::endl;
+
+    //lottoType choice loop
     while (lottoType < 1 || lottoType > 3){ //Loops the question of input number until the user types a valid number
         std::cout << "Type desired lotto and press ENTER: ";
         std::cin >> lottoType;
         if (lottoType < 1 || lottoType > 3 || !std::cin){
-            std::cout << "ERROR! Invalid input, please try again" << std::endl; //Warns the user if they typed a inavlid number
+            std::cout << "ERROR! Invalid input, please try again" << std::endl << std::endl; //Warns the user if they typed a inavlid number
             std::cin.clear(); //Clears error flags in cin
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //Ignores rest of the line inputet to lottoType
-        } else {
-            if (lottoType == 1){
+        } else if (lottoType == 1){
                 lottoTypeString = "Regular Lotto";
                 lottoPrice = 5;
-            } else if (lottoType == 2){
+                break;
+        } else if (lottoType == 2){
                 lottoTypeString = "Viking Lotto";
                 lottoPrice = 6;
-            } else if(lottoType == 3){
+                break;
+        } else if (lottoType == 3){
                 lottoTypeString = "Euro Lotto";
                 lottoPrice = 25;
-            }
-            std::cout << std::endl; //New line for formatting sakes
-            break;
+                break;
         }
     }
-    int amountOfNumbers; //Amopunt of different lotto numbers
-    while (amountOfNumbers < 1 || amountOfNumbers > 10000){
-        std::cout << "Please type amount of lotto numbers you want [0 - 10 000]: ";
+    std::cout << lottoTypeString << " chosen..." << std::endl << std::endl;
+    
+    //amountOfNumbers choice loop
+    while (amountOfNumbers < 1 || amountOfNumbers > 10000){ //Loops the question of input number until the user types a valid number
+        std::cout << "Please type amount of different lotto numbers you want [0 - 10 000]: ";
         std::cin >> amountOfNumbers;
         if (amountOfNumbers < 1 || amountOfNumbers > 10000){ //Warns the user if they typed a inavlid number
-            std::cout << "ERROR! Invalid input, please try again" << std::endl;
+            std::cout << "ERROR! Invalid input, please try again" << std::endl << std::endl;;
             std::cin.clear(); //Clears error flags in cin
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //Ignores rest of the line inputet to amountOfNumbers
         } else {
