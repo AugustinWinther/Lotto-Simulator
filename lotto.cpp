@@ -51,10 +51,11 @@ void menu(){
     while (lottoType < 1 || lottoType > 3){ //Loops the question of input number until the user types a valid number
         std::cout << "Type desired lotto and press ENTER: ";
         std::cin >> lottoType;
-        if (lottoType < 1 || lottoType > 3 || !std::cin){
+        if (lottoType < 1 || lottoType > 3 || std::cin.fail() || std::cin.peek()!='\n' ){ //std::cin.fail() checks wether the input fits the variable. std::cin.peek will in this case check that the next character in isteam is a "new line", "ENTER" key input basically, and not something else
             std::cout << "ERROR! Invalid input, please try again" << std::endl << std::endl; //Warns the user if they typed a inavlid number
             std::cin.clear(); //Clears error flags in cin
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //Ignores rest of the line inputet to lottoType
+            lottoType = 0; //Reset lotto type incase wrong inputs were saved to the varible (eg. whole numbers from floats og double inputs)
         } else if (lottoType == 1){
                 lottoTypeString = "Regular Lotto";
                 lottoPrice = 5;
@@ -73,12 +74,13 @@ void menu(){
     
     //amountOfNumbers choice loop
     while (amountOfNumbers < 1 || amountOfNumbers > 10000){ //Loops the question of input number until the user types a valid number
-        std::cout << "Please type amount of different lotto numbers you want [0 - 10 000]: ";
+        std::cout << "Please type amount of different lotto numbers you want [1 - 10 000]: ";
         std::cin >> amountOfNumbers;
-        if (amountOfNumbers < 1 || amountOfNumbers > 10000){ //Warns the user if they typed a inavlid number
-            std::cout << "ERROR! Invalid input, please try again" << std::endl << std::endl;;
+        if (amountOfNumbers < 1 || amountOfNumbers > 10000 || std::cin.fail() || std::cin.peek()!='\n'){ 
+            std::cout << "ERROR! Invalid input, please try again" << std::endl << std::endl; //Warns the user if they typed a inavlid number
             std::cin.clear(); //Clears error flags in cin
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //Ignores rest of the line inputet to amountOfNumbers
+            amountOfNumbers = 0; //Reset lotto type incase wrong inputs were saved to the varible (eg. whole numbers from floats og double inputs)
         } else {
             std::cout << std::endl; //New line for formatting sakes
             break;
