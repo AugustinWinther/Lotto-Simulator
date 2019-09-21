@@ -18,11 +18,17 @@ std::string NumToString(unsigned long num);                                     
 void menu();
 
 int main(){
+    //Welcome message
+    std::cout << "                         Welcome to Lotto Simulations!... lol                       " << std::endl;
+    std::cout << "------------------------------------------------------------------------------------" << std::endl;
+    
     std::srand(std::time(0)); //Uses time as random seed for the random generators (std::rand())
+
     menu();
 
+    //Press key to quit, so that the program dosent quit instantly
     std::cout << "Press enter to yeet away" << std::endl;
-    std::getchar(); //Press key to quit, so that the program dosent quit instantly
+    std::getchar();
 }
 
 void menu(){
@@ -33,8 +39,6 @@ void menu(){
     std::string lottoTypeString;    //String represenmting the lottoType variable. Used for console ouptut
     
     //Prints out menu
-    std::cout << "                         Welcome to Lotto Simulations!... lol                       " << std::endl;
-    std::cout << "------------------------------------------------------------------------------------" << std::endl;
     std::cout << "Please choose one of the lotteries you want to simulate:"                             << std::endl;
     std::cout << "[1] - Regular Lotto (Based of the Nowegian lottery ""Lotto"")"                        << std::endl;
     std::cout << "      7 unique and random numbers between 1-34"                                       << std::endl;
@@ -208,7 +212,7 @@ void CheckIfWin (int lottoType, std::vector<std::array<int, 7>> user, std::vecto
 
     //If you win (winning array is in user vector)
     std::cout << "Yadigg, you won!" << std::endl;
-    std::cout << "Your lotto numbers:         Winning lotto number:" << std::endl;
+    std::cout << "Your lotto numbers:        Winning lotto numbers:" << std::endl;
     PrintLottoNumbers(user);
     std::cout << "  |";
     PrintLottoNumbers(win);
