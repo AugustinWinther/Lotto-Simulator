@@ -14,7 +14,7 @@
 std::vector<std::array<int, 7>> AutoGenLottoNumbers (int lottoType, int amountOfNumbers, std::vector<std::array<int, 7>>& vector);  //Generates arrays representing lotto numbers/rows
 std::vector<std::array<int, 7>> UserGenLottoNumbers (int lottoType, std::vector<std::array<int, 7>>& vector);
 void CheckIfWin (int lottoType, std::vector<std::array<int, 7>> user, std::vector<std::array<int, 7>> win);                         //Checks if user passed vector contains the first array from win vector, if not, it generates new win array (lotto numbers)
-void PrintLottoNumbers(std::vector<std::array<int, 7>> vector);                                                                     //Prints all arrays in a vector vertically
+void PrintLottoNumbers(std::vector<std::array<int, 7>> vector, int printAmount);                                                                    //Prints all arrays in a vector vertically
 std::string NumToString(unsigned long num);                                                                                         //Converts number to string with spaces added after every 3rd digit for easy reading
 void menu();
 
@@ -180,14 +180,14 @@ std::vector<std::array<int, 7>> UserGenLottoNumbers (int lottoType, std::vector<
         for (arrayPlace=0; arrayPlace<=6; arrayPlace++){
             while (true){ 
                 for (int i = 0; i < 7; i++){    //Prints out array
-                        if (array[i] == 0){
-                            std::cout << " | --";
-                        } else if (array[i] < 10) {
-                            std::cout << " |  " << array[i]; 
-                        } else {
-                            std::cout << " | "<< array[i];
-                        }
+                    if (array[i] == 0){
+                        std::cout << " | --";
+                    } else if (array[i] < 10) {
+                        std::cout << " |  " << array[i]; 
+                    } else {
+                        std::cout << " | "<< array[i];
                     }
+                }
                 std::cout << " |" << std::endl;
                 std::cout << "Please type a number between 1-34: ";
                 std::cin >> num;
@@ -210,22 +210,30 @@ std::vector<std::array<int, 7>> UserGenLottoNumbers (int lottoType, std::vector<
     return vector; //This return will return an empty vector if none of the lottoTypes is selected.
 }
 
-void PrintLottoNumbers(std::vector<std::array<int, 7>> vector){
-    for (int i=0; i<vector.size() && i <= 9; i++){ //Loop through for every element in vector but not over 10 (9 since array start at 0) elements. If it were to print more than 10 elements in form big vecotrs, it would look messy on the output and slow the program down.
-        std::array<int, 7> array = vector[i]; //Sets "array" to be the array an "i" place in the vector
+void PrintLottoNumbers(std::vector<std::array<int, 7>> vector, int printAmount){
+    //If the printamount is bigger than vector size, set print amount to vector size since we cant print out more elements than the vector has
+    if (printAmount > vector.size()){
+        printAmount = vector.size();
+    }
+
+    //Prints out printAmount elements from passed vector
+    for (int i=0; i<vector.size() && i <= printAmount - 1 ; i++){ //Loop through for every element in vector but not over 10 (9 since array start at 0) elements. If it were to print more than 10 elements in form big vecotrs, it would look messy on the output and slow the program down.
+        std::array<int, 7> array = vector[i]; //Sets "array" to be the array at "i" place in the vector
         for(int x=0; x<array.size(); x++){
-            if (array.at(x) < 10){
-                std::cout << ' ' << ' ' << array.at(x); //Adds double spaced infront of number if its lower than 10
+            if (array[x] == 0){
+                std::cout << " | --"; //If number is 0, represent it my double dashes as this is not a valid lotto number
+            } else if (array[x] < 10) {
+                std::cout << " |  " << array[x];//If number is above 10, give it two spaces inforn to keep the format consistent on output
             } else {
-                std::cout << ' ' << array.at(x); //If number is higher than 10, it gets added one space infront
+                std::cout << " | "<< array[x];      
             }
         }
-        if (i < vector.size()-1 && vector.size() > 1 && i < 9){ //If "i"(element in vector) is not the last element and there is more than just one element, and the i is not grater than 10, add a new line after the print
-            std::cout << std::endl;
-        } else if (vector.size() > 10) { //If the vector has more than 10 elements, the last line printed shoud tell how many arrays which weren't printed
-            std::cout << std::endl;
-            std::cout << "and " << NumToString(vector.size() - 10) << " more numbers...";
-        }   
+        if (i == printAmount - 1){
+            std::cout << " |";  //If the last array has been printed, do not add a new line 
+        } else {
+            std::cout << " |" << std::endl; 
+        }
+         
     }
 }
 
@@ -241,11 +249,16 @@ void CheckIfWin (int lottoType, std::vector<std::array<int, 7>> user, std::vecto
     unsigned long w = 1; //Week/Try number
     while (std::find(user.begin(), user.end(), win[0]) == user.end()){ //Checks whether the first element in the winning vector is in the user vector, and loops until it is
         if ((w % 10000) == 0){ //Prints out every 10000th attemt so the program isn't so dull. Also so it's possbile to see some of the winning numbers which didn't match up
-            std::cout << "Your lotto numbers:        Winning lotto number:" << std::endl;
-            PrintLottoNumbers(user);
-            std::cout << "  |";
-            PrintLottoNumbers(win);
-            std::cout << "  | Week/Try: " << NumToString(w) << std::endl << std::endl; //Prints week/try number and adds to new line due to formatting the conole output
+            std::cout << "Your lotto numbers:                       Winning lotto number:" << std::endl;
+            PrintLottoNumbers(user, 10);
+            std::cout << "    ";
+            PrintLottoNumbers(win, 10);
+            std::cout << "   Week/Try: " << NumToString(w) << std::endl; //Prints week/try number and adds to new line due to formatting the conole output
+            if (user.size() > 10){
+                std::cout << "and " << NumToString(user.size() - 10) << " more lotto numbers..." << std::endl << std::endl;
+            } else {
+                std::cout << std::endl << std::endl;
+            }
         }
         w++; //Adds 1 to week/try number
         
@@ -255,9 +268,14 @@ void CheckIfWin (int lottoType, std::vector<std::array<int, 7>> user, std::vecto
 
     //If you win (winning array is in user vector)
     std::cout << "Yadigg, you won!" << std::endl;
-    std::cout << "Your lotto numbers:        Winning lotto numbers:" << std::endl;
-    PrintLottoNumbers(user);
-    std::cout << "  |";
-    PrintLottoNumbers(win);
-    std::cout << "  | Week/Try: " << NumToString(w) << std::endl;
+    std::cout << "Your lotto numbers:                       Winning lotto numbers:" << std::endl;
+    PrintLottoNumbers(user, 10);
+    std::cout << "    ";
+    PrintLottoNumbers(win, 10);
+    std::cout << "   Week/Try: " << NumToString(w) << std::endl;
+    if (user.size() > 10){
+        std::cout << "and " << NumToString(user.size() - 10) << " more lotto numbers..." << std::endl << std::endl;
+    } else {
+        std::cout << std::endl << std::endl;
+    }
 }
