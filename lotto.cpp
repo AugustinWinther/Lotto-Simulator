@@ -74,6 +74,7 @@ void menu(){
         }
     }
     std::cout << lottoTypeString << " chosen..." << std::endl << std::endl;
+    
     //Generating winning numbers
     std::vector<std::array<int, 7>> winningNumbers; 
     AutoGenLottoNumbers(lottoType, 1, winningNumbers); 
@@ -96,7 +97,7 @@ void menu(){
                 std::cout << std::endl;
                 UserGenLottoNumbers(lottoType, userNumbers);
                 std::cout << "Here are your current numbers:" << std::endl;
-                PrintLottoNumbers(userNumbers, 100);
+                PrintLottoNumbers(userNumbers, 10000);
                 std::cout << std::endl << std::endl;
                 std::cout << "[1] - Continue to simulation"   << std::endl;
                 std::cout << "[2] - Create more numbers"      << std::endl;
@@ -132,7 +133,6 @@ void menu(){
                 }
             }
             std::cout << "Generating lotto numbers..." << std::endl;
-            std::vector<std::array<int, 7>> userNumbers;     //Vector containing a dymanic amount of 7 int element arrays
             AutoGenLottoNumbers(lottoType, amountOfNumbers, userNumbers);
             std::cout << "Finished!" << std::endl << std::endl;
             break;
@@ -386,7 +386,7 @@ std::string NumToString(unsigned long num){
 void CheckIfWin (int lottoType, std::vector<std::array<int, 7>> user, std::vector<std::array<int, 7>> win) {
     unsigned long w = 1; //Week/Try number
     while (std::find(user.begin(), user.end(), win[0]) == user.end()){ //Checks whether the first element in the winning vector is in the user vector, and loops until it is
-        if ((w % 10000) == 0){ //Prints out every 10000th attemt so the program isn't so dull. Also so it's possbile to see some of the winning numbers which didn't match up
+        if ((w % (10001-user.size())) == 0){ //Prints out every 10000th attemt so the program isn't so dull. Also so it's possbile to see some of the winning numbers which didn't match up
             std::cout << "Your lotto numbers:                       Winning lotto number:" << std::endl;
             PrintLottoNumbers(user, 10);
             std::cout << "    ";
