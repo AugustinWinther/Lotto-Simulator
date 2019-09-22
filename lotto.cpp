@@ -11,10 +11,11 @@
 //N/A
 
 //Global declearations of functions
-std::vector<std::array<int, 7>> AutoGenLottoNumbers (int lottoType, int amountOfNumbers, std::vector<std::array<int, 7>>& vector);  //Generates arrays representing lotto numbers/rows
-std::vector<std::array<int, 7>> UserGenLottoNumbers (int lottoType, std::vector<std::array<int, 7>>& vector);
+std::vector<std::array<int, 7>> AutoGenLottoNumbers (int lottoType, int amountOfNumbers, std::vector<std::array<int, 7>>& vector);  //Auto generates arrays representing lotto numbers/rows
+std::vector<std::array<int, 7>> UserGenLottoNumbers (int lottoType, std::vector<std::array<int, 7>>& vector);                       //User generates arrays representing lotto numbers/rows
 void CheckIfWin (int lottoType, std::vector<std::array<int, 7>> user, std::vector<std::array<int, 7>> win);                         //Checks if user passed vector contains the first array from win vector, if not, it generates new win array (lotto numbers)
-void PrintLottoNumbers(std::vector<std::array<int, 7>> vector, int printAmount);                                                                    //Prints all arrays in a vector vertically
+void PrintLottoNumbers(std::vector<std::array<int, 7>> vector, int printAmount);                                                    //Prints all arrays in a vector vertically
+void PrintLottoArray (std::array<int, 7> array);                                                                                    //Prints array                 
 std::string NumToString(unsigned long num);                                                                                         //Converts number to string with spaces added after every 3rd digit for easy reading
 void menu();
 
@@ -26,7 +27,7 @@ int main(){
     std::cout << "------------------------------------------------------------------------------------" << std::endl;
     
     menu();
-
+    
     //Press key to quit, so that the program dosent quit instantly
     std::cout << "Press enter to yeet away" << std::endl;
     std::getchar();
@@ -194,17 +195,7 @@ std::vector<std::array<int, 7>> UserGenLottoNumbers (int lottoType, std::vector<
                     break;
                 }
             }
-            //PrintsOutArray
-            for(int x=0; x<array.size(); x++){
-                if (array[x] == 0){
-                    std::cout << " | --";
-                } else if (array[x] < 10) {
-                    std::cout << " |  " << array[x];
-                } else {
-                    std::cout << " | "<< array[x];      
-                }
-            }
-            std::cout << " |" << std::endl;
+            PrintLottoArray(array);
         }
         vector.push_back(array); //Appends array to vector
         return vector;
@@ -247,17 +238,7 @@ std::vector<std::array<int, 7>> UserGenLottoNumbers (int lottoType, std::vector<
                     }
                 }  
             }
-            //PrintsOutArray
-            for(int x=0; x<array.size(); x++){
-                if (array[x] == 0){
-                    std::cout << " | --";
-                } else if (array[x] < 10) {
-                    std::cout << " |  " << array[x];
-                } else {
-                    std::cout << " | "<< array[x];      
-                }
-            }
-            std::cout << " |" << std::endl;
+            PrintLottoArray(array);
         }
         vector.push_back(array); //Appends array to vector
         return vector;
@@ -303,17 +284,7 @@ std::vector<std::array<int, 7>> UserGenLottoNumbers (int lottoType, std::vector<
                     }
                 } 
             }
-            //PrintsOutArray
-            for(int x=0; x<array.size(); x++){
-                if (array[x] == 0){
-                    std::cout << " | --";
-                } else if (array[x] < 10) {
-                    std::cout << " |  " << array[x];
-                } else {
-                    std::cout << " | "<< array[x];      
-                }
-            }
-            std::cout << " |" << std::endl;
+            PrintLottoArray(array);
         }
         vector.push_back(array); //Appends array to vector
         return vector;
@@ -346,6 +317,20 @@ void PrintLottoNumbers(std::vector<std::array<int, 7>> vector, int printAmount){
         }
          
     }
+}
+
+void PrintLottoArray (std::array<int, 7> array){
+    //PrintsOutArray
+    for(int x=0; x<array.size(); x++){
+        if (array[x] == 0){
+            std::cout << " | --";
+        } else if (array[x] < 10) {
+            std::cout << " |  " << array[x];
+        } else {
+            std::cout << " | "<< array[x];      
+        }
+    }
+    std::cout << " |" << std::endl;
 }
 
 std::string NumToString(unsigned long num){
