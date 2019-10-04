@@ -388,21 +388,21 @@ std::string NumToString(unsigned long num){
 }
 
 void CheckIfWin (int lottoType, std::vector<std::array<int, 7>> user, std::vector<std::array<int, 7>> win) {
-    unsigned int NumOfTries = 1; //Week/Try number
+    unsigned int numOfTries = 1; //Week/Try number
     while (std::find(user.begin(), user.end(), win[0]) == user.end()){ //Checks whether the first element in the winning vector is in the user vector, and loops until it is
-        if ((NumOfTries % (10001-user.size())) == 0){ 
+        if ((numOfTries % (10001-user.size())) == 0){ 
             std::cout << "Your lotto numbers:                       Winning lotto number:" << std::endl;
             PrintLottoNumbers(user, 10);
             std::cout << "    ";
             PrintLottoNumbers(win, 10);
-            std::cout << "   Week/Try: " << NumToString(NumOfTries) << "    Total cost: " << NumToString(user.size() * lottoPrice * NumOfTries) << "kr" << std::endl; //Prints week/try number and the total cost
+            std::cout << "   Week/Try: " << NumToString(numOfTries) << "    Total cost: " << NumToString(user.size() * lottoPrice * numOfTries) << "kr" << std::endl; //Prints week/try number and the total cost
             if (user.size() > 10){
                 std::cout << "and " << NumToString(user.size() - 10) << " more lotto numbers..." << std::endl << std::endl;
             } else {
                 std::cout << std::endl << std::endl;
             }
         }
-        NumOfTries++; //Adds 1 to week/try number
+        numOfTries++; //Adds 1 to week/try number
         
         //Genreates new winning array since tha last didnt match any of the user arrays
         AutoGenLottoNumbers(lottoType, 1, win);
@@ -414,7 +414,7 @@ void CheckIfWin (int lottoType, std::vector<std::array<int, 7>> user, std::vecto
     PrintLottoNumbers(user, 10);
     std::cout << "    ";
     PrintLottoNumbers(win, 10);
-    std::cout << "   Week/Try: " << NumToString(NumOfTries) << "    Total cost: " << NumToString(user.size() * lottoPrice * NumOfTries) << "kr" << std::endl;
+    std::cout << "   Week/Try: " << NumToString(numOfTries) << "    Total cost: " << NumToString(user.size() * lottoPrice * numOfTries) << "kr" << std::endl;
     if (user.size() > 10){
         std::cout << "and " << NumToString(user.size() - 10) << " more lotto numbers..." << std::endl << std::endl;
     } else {
