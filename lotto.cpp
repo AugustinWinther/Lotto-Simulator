@@ -54,10 +54,10 @@ void menu(){
     while (lottoType < 1 || lottoType > 3){ //Loops the question of input number until the user types a valid number
         std::cout << "Type desired lotto and press ENTER: ";
         std::cin >> lottoType;
-        if (lottoType < 1 || lottoType > 3 || std::cin.fail() || std::cin.peek()!='\n' ){ //std::cin.fail() checks wether the input fits the variable. std::cin.peek will in this case check that the next character in isteam is a "new line", "ENTER" key input basically, and not something else
+        if (lottoType < 1 || lottoType > 3 || std::cin.fail() || std::cin.peek()!='\n'){ //std::cin.fail() checks wether the input fits the variable. std::cin.peek will in this case check that the next character in isteam is a "new line", "ENTER" key input basically, and not something else
             std::cout << "ERROR! Invalid input, please try again" << std::endl << std::endl; //Warns the user if they typed a inavlid number
             std::cin.clear(); //Clears error flags in cin
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //Ignores rest of the line inputet to lottoType
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //Ignores rest of the line inputed to lottoType
             lottoType = 0; //Reset lotto type incase wrong inputs were saved to the varible (eg. whole numbers from floats og double inputs)
         } else if (lottoType == 1){
             lottoTypeString = "Regular Lotto";
@@ -92,8 +92,9 @@ void menu(){
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //Ignores rest of the line inputet to lottoType
             choice = 0; //Reset choice incase wrong inputs were saved to the varible (eg. whole numbers from floats og double inputs)
         } else if (choice == 1){
-            bool doneGen = 1;
-            while (doneGen){
+            bool doneGen = 0;
+            //User generation loop
+            while (!doneGen){
                 std::cout << std::endl;
                 UserGenLottoNumbers(lottoType, userNumbers);
                 std::cout << "Here are your current numbers:" << std::endl;
@@ -111,7 +112,7 @@ void menu(){
                         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //Ignores rest of the line inputet to lottoType
                         choice = 0; //Reset choice incase wrong inputs were saved to the varible (eg. whole numbers from floats og double inputs)
                     } else if (choice == 1){
-                        doneGen = 0;
+                        doneGen = 1; //If user chooses to end generating theyr own numbers. doneGen is set to true
                         std::cout << std::endl;
                         break;
                     }
