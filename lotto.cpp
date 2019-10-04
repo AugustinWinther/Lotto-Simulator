@@ -14,6 +14,10 @@ void PrintLottoNumbers(std::vector<std::array<int, 7>> vector, int printAmount);
 void PrintLottoArray (std::array<int, 7> array);                                                                                    //Prints array                 
 void LottoMenu();
 
+//Global decleration of data types
+int lottoPrice = 0; //Price of specified lotto. Gets defined depending on what lottoType is selected. Used in LottoMenu and CheckIfWin
+
+
 int main(){
     std::srand(std::time(0)); //Uses time as random seed for the random generators (std::rand())
 
@@ -31,7 +35,6 @@ int main(){
 void LottoMenu(){
     //Declearing variables for this function
     int lottoType = 0;              //1=Regualr, 2=Viking, 3=Euro. Defined to 0 for resetting purposes
-    int lottoPrice = 0;             //Price of specified lotto. Gets defined depending on what lottoType is selected. Defined to 0 for resetting purposes
     int amountOfNumbers = 0;        //Amount of different lotto numbers. Defined to 0 for resetting purposes
     std::string lottoTypeString;    //String represenmting the lottoType variable. Used for console ouptut
     std::vector<std::array<int, 7>> userNumbers;    //User vector numbers
@@ -141,8 +144,8 @@ void LottoMenu(){
     }
 
     std::cout << "Ready to simulate " << NumToString(userNumbers.size()) << " different lotto numbers on " << lottoTypeString <<std::endl;
-    std::cout << NumToString(userNumbers.size()) << " " << lottoTypeString << " numbers would cost you: " << NumToString(userNumbers.size() * lottoPrice) << "kr (NOK, Norwegian kroner)" << std::endl;
-    std::cout << "Press enter so start simulation. It will run until you win..." << std::endl;
+    std::cout << NumToString(userNumbers.size()) << " " << lottoTypeString << " numbers would cost you: " << NumToString(userNumbers.size() * lottoPrice) << "kr (NOK, Norwegian kroner) each time" << std::endl;
+    std::cout << "Press ENTER so start simulation. It will run until you win..." << std::endl;
     std::getchar(); 
     std::getchar(); //Press any key to contiue
     CheckIfWin(lottoType, userNumbers, winningNumbers);
@@ -392,7 +395,7 @@ void CheckIfWin (int lottoType, std::vector<std::array<int, 7>> user, std::vecto
             PrintLottoNumbers(user, 10);
             std::cout << "    ";
             PrintLottoNumbers(win, 10);
-            std::cout << "   Week/Try: " << NumToString(NumOfTries) << std::endl; //Prints week/try number and adds to new line due to formatting the conole output
+            std::cout << "   Week/Try: " << NumToString(NumOfTries) << "    Total cost: " << NumToString(user.size() * lottoPrice * NumOfTries) << "kr" << std::endl; //Prints week/try number and the total cost
             if (user.size() > 10){
                 std::cout << "and " << NumToString(user.size() - 10) << " more lotto numbers..." << std::endl << std::endl;
             } else {
@@ -411,7 +414,7 @@ void CheckIfWin (int lottoType, std::vector<std::array<int, 7>> user, std::vecto
     PrintLottoNumbers(user, 10);
     std::cout << "    ";
     PrintLottoNumbers(win, 10);
-    std::cout << "   Week/Try: " << NumToString(NumOfTries) << std::endl;
+    std::cout << "   Week/Try: " << NumToString(NumOfTries) << "    Total cost: " << NumToString(user.size() * lottoPrice * NumOfTries) << "kr" << std::endl;
     if (user.size() > 10){
         std::cout << "and " << NumToString(user.size() - 10) << " more lotto numbers..." << std::endl << std::endl;
     } else {
