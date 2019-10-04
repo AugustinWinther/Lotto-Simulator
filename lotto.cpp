@@ -8,10 +8,10 @@
 //Global declearations of functions
 std::vector<std::array<int, 7>> AutoGenLottoNumbers (int lottoType, int amountOfNumbers, std::vector<std::array<int, 7>>& vector);  //Auto generates arrays representing lotto numbers/rows
 std::vector<std::array<int, 7>> UserGenLottoNumbers (int lottoType, std::vector<std::array<int, 7>>& vector);                       //User generates arrays representing lotto numbers/rows
+std::string NumToString(unsigned long num);                                                                                         //Converts number to string with spaces added after every 3rd digit for easy reading
 void CheckIfWin (int lottoType, std::vector<std::array<int, 7>> user, std::vector<std::array<int, 7>> win);                         //Checks if user passed vector contains the first array from win vector, if not, it generates new win array (lotto numbers)
 void PrintLottoNumbers(std::vector<std::array<int, 7>> vector, int printAmount);                                                    //Prints all arrays in a vector vertically
 void PrintLottoArray (std::array<int, 7> array);                                                                                    //Prints array                 
-std::string NumToString(unsigned long num);                                                                                         //Converts number to string with spaces added after every 3rd digit for easy reading
 void LottoMenu();
 
 int main(){
@@ -385,21 +385,21 @@ std::string NumToString(unsigned long num){
 }
 
 void CheckIfWin (int lottoType, std::vector<std::array<int, 7>> user, std::vector<std::array<int, 7>> win) {
-    unsigned long w = 1; //Week/Try number
+    unsigned int NumOfTries = 1; //Week/Try number
     while (std::find(user.begin(), user.end(), win[0]) == user.end()){ //Checks whether the first element in the winning vector is in the user vector, and loops until it is
-        if ((w % (10001-user.size())) == 0){ 
+        if ((NumOfTries % (10001-user.size())) == 0){ 
             std::cout << "Your lotto numbers:                       Winning lotto number:" << std::endl;
             PrintLottoNumbers(user, 10);
             std::cout << "    ";
             PrintLottoNumbers(win, 10);
-            std::cout << "   Week/Try: " << NumToString(w) << std::endl; //Prints week/try number and adds to new line due to formatting the conole output
+            std::cout << "   Week/Try: " << NumToString(NumOfTries) << std::endl; //Prints week/try number and adds to new line due to formatting the conole output
             if (user.size() > 10){
                 std::cout << "and " << NumToString(user.size() - 10) << " more lotto numbers..." << std::endl << std::endl;
             } else {
                 std::cout << std::endl << std::endl;
             }
         }
-        w++; //Adds 1 to week/try number
+        NumOfTries++; //Adds 1 to week/try number
         
         //Genreates new winning array since tha last didnt match any of the user arrays
         AutoGenLottoNumbers(lottoType, 1, win);
@@ -411,7 +411,7 @@ void CheckIfWin (int lottoType, std::vector<std::array<int, 7>> user, std::vecto
     PrintLottoNumbers(user, 10);
     std::cout << "    ";
     PrintLottoNumbers(win, 10);
-    std::cout << "   Week/Try: " << NumToString(w) << std::endl;
+    std::cout << "   Week/Try: " << NumToString(NumOfTries) << std::endl;
     if (user.size() > 10){
         std::cout << "and " << NumToString(user.size() - 10) << " more lotto numbers..." << std::endl << std::endl;
     } else {
