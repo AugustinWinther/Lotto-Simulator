@@ -8,16 +8,16 @@
 //Global declearations of functions
 std::vector<std::array<int, 7>> AutoGenLottoNumbers (int lottoType, int amountOfNumbers, std::vector<std::array<int, 7>>& vector);  //Auto generates arrays representing lotto numbers/rows
 std::vector<std::array<int, 7>> UserGenLottoNumbers (int lottoType, std::vector<std::array<int, 7>>& vector);                       //User generates arrays representing lotto numbers/rows
-std::string NumToString(unsigned long num);                                                                                         //Converts number to string with spaces added after every 3rd digit for easy reading
-void CheckIfWin (int lottoType, std::vector<std::array<int, 7>> user, std::vector<std::array<int, 7>> win);                         //Checks if user passed vector contains the first array from win vector, if not, it generates new win array (lotto numbers)
+std::string NumToString(unsigned long num);                                                                                         //Converts number to string with spaces for easy reading
+void CheckIfWin (int lottoType, std::vector<std::array<int, 7>> user, std::vector<std::array<int, 7>> win);                         //Checks if user has winning array
 void PrintLottoNumbers(std::vector<std::array<int, 7>> vector, int printAmount);                                                    //Prints all arrays in a vector vertically
-void PrintLottoArray (std::array<int, 7> array);                                                                                    //Prints array                 
-void LottoMenu();
+void PrintLottoArray (std::array<int, 7> array);                                                                                    //Prints single array              
+void LottoMenu();                                                                                                                   //Semi interactive console menu  
 
 //Global decleration of data types
-int lottoPrice = 0; //Price of specified lotto. Gets defined depending on what lottoType is selected. Used in LottoMenu and CheckIfWin
+int lottoPrice = 0; //Price of lotto. Defined depending what lottoType selected. Used in LottoMenu and CheckIfWin
 
-
+//Main function
 int main(){
     std::srand(std::time(0)); //Uses time as random seed for the random generators (std::rand())
 
@@ -32,6 +32,7 @@ int main(){
     std::getchar();
 }
 
+//Semi interactive console menu
 void LottoMenu(){
     //Declearing variables for this function
     int lottoType = 0;              //1=Regualr, 2=Viking, 3=Euro. Defined to 0 for resetting purposes
@@ -39,7 +40,6 @@ void LottoMenu(){
     std::string lottoTypeString;    //String represenmting the lottoType variable. Used for console ouptut
     std::vector<std::array<int, 7>> userNumbers;    //User vector numbers
     std::vector<std::array<int, 7>> winningNumbers; //Winning lotto numbers
-
 
     //Prints out menu
     std::cout << "Please choose one of the lotteries you want to simulate:"                             << std::endl;
@@ -151,6 +151,7 @@ void LottoMenu(){
     CheckIfWin(lottoType, userNumbers, winningNumbers);
 }
 
+//Auto generates arrays representing lotto numbers/rows
 std::vector<std::array<int, 7>> AutoGenLottoNumbers (int lottoType, int amountOfNumbers, std::vector<std::array<int, 7>>& vector){ 
     vector.clear();
     for (int i=1; i<=amountOfNumbers; i++){ //Loops though array generation until vector has recieved amountOfNumbers arrays    
@@ -217,6 +218,7 @@ std::vector<std::array<int, 7>> AutoGenLottoNumbers (int lottoType, int amountOf
     return vector; //This return will return an empty vector if none of the lottoTypes is selected.
 }
 
+//User generates arrays representing lotto numbers/rows
 std::vector<std::array<int, 7>> UserGenLottoNumbers (int lottoType, std::vector<std::array<int, 7>>& vector){ 
     std::array<int, 7> array = {0, 0, 0, 0, 0, 0, 0};
     int arrayPlace;
@@ -338,6 +340,7 @@ std::vector<std::array<int, 7>> UserGenLottoNumbers (int lottoType, std::vector<
     return vector; //This return will return an empty vector if none of the lottoTypes is selected.
 }
 
+//Prints all arrays in a vector vertically
 void PrintLottoNumbers(std::vector<std::array<int, 7>> vector, int printAmount){
     //If the printAmount is bigger than vector size, set print amount to vector size since we cant print out more elements than the vector has
     if (printAmount > vector.size()){
@@ -365,6 +368,7 @@ void PrintLottoNumbers(std::vector<std::array<int, 7>> vector, int printAmount){
     }
 }
 
+//Prints single array
 void PrintLottoArray (std::array<int, 7> array){
     //PrintsOutArray
     for(int x=0; x<array.size(); x++){
@@ -379,6 +383,7 @@ void PrintLottoArray (std::array<int, 7> array){
     std::cout << " |" << std::endl;
 }
 
+//Converts number to string with spaces for easy reading
 std::string NumToString(unsigned long num){
     std::string numString = std::to_string(num); //Converts to string
     for (int i=numString.length()-3; i>0; i-=3){ //Adds space after every 3rd digit
@@ -387,6 +392,7 @@ std::string NumToString(unsigned long num){
     return numString;
 }
 
+//Checks if user has winning array
 void CheckIfWin (int lottoType, std::vector<std::array<int, 7>> user, std::vector<std::array<int, 7>> win) {
     unsigned int numOfTries = 1; //Week/Try number
     while (std::find(user.begin(), user.end(), win[0]) == user.end()){ //Checks whether the first element in the winning vector is in the user vector, and loops until it is
