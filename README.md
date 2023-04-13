@@ -1,4 +1,4 @@
-# Lotto
-C++ program that simulates lotteries based on real world lotteries. 
-Just too show how immensely low chance you have of winning. 
-Using this program and repository for increasing my C++ skills and learning the ways of Git and programming
+# Lotto Simulator
+C++ program that simulates real world lotteries. 
+I created it just too show how immensely low chance you have of winning. 
+I'm also using this repository for increasing my C++ skills, and learning the ways of Git and programming.
